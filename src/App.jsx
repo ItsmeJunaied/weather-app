@@ -5,9 +5,23 @@ import Wind from './Components/Wind/Wind';
 import AirPollutionQuality from './Components/AirPollutionQuality/AirPollutionQuality';
 import Weather from './Components/Weather/Weather';
 import Loacation from './Components/Loacation/Loacation';
+import { useQuery } from '@tanstack/react-query';
+import retriveWeatherData from './api/WeatherAPI';
 
 
 function App() {
+
+  const { data: weatherData, error, isLoading } = useQuery({
+    queryKey: ["weather"],
+    queryFn: retriveWeatherData,
+
+  });
+
+  if (isLoading) return <div>Return Weather ....</div>
+  if (error) return <div>{error.message}</div>
+
+
+  console.log(weatherData);
   return (
     <div className="wrapper">
       <img src={backgroundImg} className="bg-img" alt="background" />
@@ -18,19 +32,15 @@ function App() {
           <div className="grid grid-cols-12 gap-y-8 py-16 lg:gap-8 2xl:gap-20 2xl:py-20 2xl:px-20">
 
             {/* location */}
-            <Loacation></Loacation>
-
+            <Loacation locationData={weatherData.location}></Loacation>
             {/* Current Weather */}
-            <Weather></Weather>
-
+            <Weather weather={weatherData.current.condition}></Weather>
             {/* Air Pollution & Quality */}
-            <AirPollutionQuality></AirPollutionQuality>
-
+            <AirPollutionQuality detailedWeatherData={weatherData.current}></AirPollutionQuality>
             {/* Wind */}
-            <Wind></Wind>
-
+            <Wind windData={weatherData.current}></Wind>
             {/* Current Temperature */}
-            <Temperature></Temperature>
+            <Temperature tempData={weatherData.current}></Temperature>
           </div>
         </div>
       </main>
