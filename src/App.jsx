@@ -7,33 +7,30 @@ import AirPollutionQuality from './Components/AirPollutionQuality/AirPollutionQu
 import Weather from './Components/Weather/Weather';
 import Loacation from './Components/Loacation/Loacation';
 import { useQuery } from '@tanstack/react-query';
-// import retriveWeatherData from './api/WeatherAPI';
+import retriveWeatherData from './api/WeatherAPI';
 import { useState } from 'react';
-import axios from 'axios';
+import Forecast from './Components/Forecast/Forecast';
 
 
 function App() {
   const [location, setLocation] = useState('Dhaka');
 
 
-  const retriveWeatherData = async (location) => {
-    const response = await axios.get(`http://api.weatherapi.com/v1/current.json?key=617b6d309c82448ab2c123316242005&q=${location}&aqi=no`);
 
-    return response.data
-  }
-
-  const { data: weatherData, error, isLoading } = useQuery({
+  const { data: weatherData, error, isLoading, refetch } = useQuery({
     queryKey: ["weather", location],
     queryFn: () => retriveWeatherData(location),
 
   });
 
 
-  if (error) return <div>{error.message}</div>
+  const handleRetry = () => {
+    refetch();
+  };
 
 
-  console.log(location)
-  console.log(weatherData)
+  
+
   return (
     <div className="wrapper">
       <img src={backgroundImg} className="bg-img" alt="background" />
@@ -51,21 +48,39 @@ function App() {
                 <div className='h-8 w-8 bg-white rounded-full animate-bounce [animation-delay:-0.15s]'></div>
                 <div className='h-8 w-8 bg-white rounded-full animate-bounce'></div>
               </div>
+            ) : error ? (
+              <div className='flex flex-col items-center'>
+                <p className='text-red-500 text-lg'>
+                  No Location Found Name - {location}
+                </p>
+                <button
+                  onClick={handleRetry}
+                  className='mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700'
+                >
+                  Retry
+                </button>
+              </div>
             ) : (
               <div className="grid grid-cols-12 gap-y-8 py-16 lg:gap-8 2xl:gap-20 2xl:py-10 2xl:px-20">
-                {/* location */}
+                {/* Location */}
                 <Loacation setLocation={setLocation} locationData={weatherData.location}></Loacation>
                 {/* Current Weather */}
                 <Weather weather={weatherData.current.condition}></Weather>
-                {/* Air Pollution & Quality */}
-                <AirPollutionQuality detailedWeatherData={weatherData.current}></AirPollutionQuality>
-                {/* Wind */}
-                <Wind windData={weatherData.current}></Wind>
                 {/* Current Temperature */}
                 <Temperature tempData={weatherData.current}></Temperature>
+                {/* Air Pollution & Quality */}
+                <AirPollutionQuality detailedWeatherData={weatherData.current}></AirPollutionQuality>
+
+                {/* Forecast */}
+                <Forecast forecastData={weatherData.forecast}></Forecast>
+                {/* Wind */}
+                <Wind windData={weatherData.current}></Wind>
+
+
               </div>
             )
           }
+
 
 
         </div>

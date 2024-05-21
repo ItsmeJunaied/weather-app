@@ -16,7 +16,7 @@ const AirPollutionQuality = ({ detailedWeatherData }) => {
   const isDayText = is_day ? 'Day' : 'Night';
 
   return (
-    <div className="col-span-12 lg:col-span-4 2xl:col-span-6">
+    <div className="col-span-12 lg:col-span-4 2xl:col-span-4">
       <div className="card">
         <div className="mt-3 space-y-2 lg:space-y-3">
 

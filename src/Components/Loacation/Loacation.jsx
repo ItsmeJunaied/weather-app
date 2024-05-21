@@ -38,7 +38,7 @@ const Loacation = ({ locationData, setLocation }) => {
 
   return (
 
-    <div className="col-span-12 flex flex-col  justify-end lg:col-span-8 2xl:col-span-9">
+    <div className="col-span-12 flex flex-col  justify-end lg:col-span-8 2xl:col-span-6">
 
       <div>
         <div className="mb-2 flex items-center gap-2">
