@@ -14,22 +14,19 @@ import Forecast from './Components/Forecast/Forecast';
 
 function App() {
   const [location, setLocation] = useState('Dhaka');
+  // const navigate = useNavigate();
 
 
-
-  const { data: weatherData, error, isLoading, refetch } = useQuery({
+  const { data: weatherData, error, isLoading } = useQuery({
     queryKey: ["weather", location],
     queryFn: () => retriveWeatherData(location),
 
   });
 
-
-  const handleRetry = () => {
-    refetch();
+  const handleGoBack = () => {
+    setLocation('Dhaka');
   };
 
-
-  
 
   return (
     <div className="wrapper">
@@ -50,15 +47,16 @@ function App() {
               </div>
             ) : error ? (
               <div className='flex flex-col items-center'>
-                <p className='text-red-500 text-lg'>
-                  No Location Found Name - {location}
+                <p className='text-white text-2xl font-bold'>
+                  No Location Found Name - <span className='text-red-500'>{location}</span>
                 </p>
                 <button
-                  onClick={handleRetry}
+                  onClick={handleGoBack}
                   className='mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700'
                 >
-                  Retry
+                  Go Back
                 </button>
+
               </div>
             ) : (
               <div className="grid grid-cols-12 gap-y-8 py-16 lg:gap-8 2xl:gap-20 2xl:py-10 2xl:px-20">
