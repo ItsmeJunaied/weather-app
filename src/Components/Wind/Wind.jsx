@@ -12,7 +12,7 @@ const Wind = ({ windData }) => {
         <div className="feature-main">
           <img className="max-w-20" src={windIcon} alt="wind icon" />
           <h3 className="feature-title text-lg">
-            Direction - <span className='text-[#9EE2F8]'>{wind_dir}</span>
+            <span className='text-base'>Direction</span> - <span className='text-[#9EE2F8]'>{wind_dir}</span>
           </h3>
           <div className="text-sm lg:text-base text-[#CADEE8]">
             <div>

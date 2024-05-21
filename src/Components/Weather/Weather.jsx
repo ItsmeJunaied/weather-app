@@ -9,7 +9,7 @@ const Weather = ({weather}) => {
             <div className="card">
                 <h6 className="feature-name">Current Weather</h6>
                 <div className="feature-main">
-                    <img className="max-w-20" src={icon} alt="rain icon" />
+                    <img className="w-36" src={icon} alt="rain icon" />
                     <h3 className="feature-title text-xl">{text}</h3>
                     {/* <span className="feature-name">Moderate Rain</span> */}
                 </div>
