@@ -16,7 +16,7 @@ const Forecast = ({ forecastData }) => {
         <div className="col-span-12 lg:col-span-4 2xl:col-span-5 h-[400px]">
             <div className="card overflow-y-scroll">
                 <div className="mt-3 space-y-2 lg:space-y-3">
-                    <h6 className="feature-name">Weather Details</h6>
+                    <h6 className="feature-name">Forecast Details</h6>
                     <div className='grid grid-cols-5 gap-2'>
                         <div className='text-center'>Time</div>
                         <div className='text-center'>Icon</div>
